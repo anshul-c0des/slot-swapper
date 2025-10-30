@@ -31,16 +31,16 @@ export const AuthProvider = ({ children }) => {
     }
     socket.emit("register", user._id || user.id);
 
-    socket.on("newRequest", (data) => {
+    socket.on("newSwapRequest", (data) => {
       toast.success(data.message);
     });
 
-    socket.on("responseUpdate", (data) => {
-      toast.success(data.message);
+    socket.on("swapResponseUpdate", (data) => {
+      toast.success(data.message || `Swap ${data?.status?.toLowerCase?.() || "update"}`);
     });
     return () => {
-      socket.off("newRequest");
-      socket.off("responseUpdate");
+      socket.off("newSwapRequest");
+      socket.off("swapResponseUpdate");
     };
   }, [user]);
 

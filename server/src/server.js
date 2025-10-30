@@ -36,9 +36,16 @@ io.on("connection", (socket) => {
 });
 
 export const notifyUser = (userId, event, data) => {
-  const socketId = userSocketMap.get(userId?.toString());
+  if (!userId) {
+    io.emit(event, data);
+    return;
+  }
+  const idStr = userId.toString ? userId.toString() : userId;
+  const socketId = userSocketMap.get(idStr);
   if (socketId) io.to(socketId).emit(event, data);
 };
+
+
 
 // Start server
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

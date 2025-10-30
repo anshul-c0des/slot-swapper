@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "../pages/Auth/Login";
 import Signup from "../pages/Auth/Signup";
 import Dashboard from "../pages/Dashboard/Dashboard";
@@ -9,7 +9,6 @@ import Requests from "../pages/Requests/Requests";
 
 export default function AppRouter() {
   return (
-    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/requests" element={<Requests />} />
@@ -32,6 +31,5 @@ export default function AppRouter() {
           }
         />
       </Routes>
-    </BrowserRouter>
   );
 }
