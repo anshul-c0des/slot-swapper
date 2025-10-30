@@ -1,51 +1,54 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosClient from "../../api/axiosClient";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Signup() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { signup } = useAuth();
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
-
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(form.name, form.email, form.password);
+    try {
+      await signup(name, email, password);
+      navigate("/dashboard");
+    } catch (err) {
+      alert(err.response?.data?.message || "Signup failed");
+    }
   };
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-3 p-6 shadow-lg rounded bg-white w-80"
-      >
-        <h2 className="text-xl font-semibold text-center">Sign Up</h2>
+    <div className="p-6 max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input
-          name="name"
+          type="text"
           placeholder="Name"
-          className="border p-2"
-          value={form.name}
-          onChange={handleChange}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="border p-2 rounded"
+          required
         />
         <input
-          name="email"
+          type="email"
           placeholder="Email"
-          className="border p-2"
-          value={form.email}
-          onChange={handleChange}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border p-2 rounded"
+          required
         />
         <input
-          name="password"
           type="password"
           placeholder="Password"
-          className="border p-2"
-          value={form.password}
-          onChange={handleChange}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border p-2 rounded"
+          required
         />
-        <button
-          type="submit"
-          className="bg-green-600 text-white py-2 rounded hover:bg-green-700"
-        >
+        <button type="submit" className="bg-green-600 text-white p-2 rounded hover:bg-green-700">
           Sign Up
         </button>
       </form>

@@ -13,6 +13,7 @@ export const signup = async (req, res, next) => {
 
     const user = await User.create({ name, email, passwordHash });
     generateToken(res, user._id);
+
     res.status(201).json({ message: "User created", user: { id: user._id, name, email } });
   } catch (err) {
     next(err);
@@ -35,11 +36,25 @@ export const login = async (req, res, next) => {
   }
 };
 
-export const logout = (req, res) => {
-  res.clearCookie("jwt", {
-    httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: process.env.NODE_ENV === "production",
-  });
-  res.json({ message: "Logged out successfully" });
+export const logout = (req, res, next) => {
+  try {
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+    res.json({ message: "Logged out successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getMe = async (req, res, next) => {
+  try {
+    if (!req.user) return res.status(401).json({ message: "Not authorized" });
+    const { _id, name, email } = req.user;
+    res.json({ user: { id: _id, name, email } });
+  } catch (err) {
+    next(err);
+  }
 };
