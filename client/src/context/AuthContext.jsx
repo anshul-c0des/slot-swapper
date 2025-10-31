@@ -6,10 +6,10 @@ import socket from "../socket";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);   // current user
+  const [loading, setLoading] = useState(true);   // loading state
 
-  useEffect(() => {
+  useEffect(() => {   // fetch logged in user on mount
     const fetchUser = async () => {
       try {
         const res = await axiosClient.get("/auth/me");
@@ -23,20 +23,22 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  useEffect(() => {
-    if(!user) return;
+  useEffect(() => {   // initialise socket listeners on mount
+    if (!user) return;
 
-    if(!socket.connected){
+    if (!socket.connected) {
       socket.connect();
     }
     socket.emit("register", user._id || user.id);
 
-    socket.on("newSwapRequest", (data) => {
+    socket.on("newSwapRequest", (data) => {   // listens for new request
       toast.success(data.message);
     });
 
-    socket.on("swapResponseUpdate", (data) => {
-      toast.success(data.message || `Swap ${data?.status?.toLowerCase?.() || "update"}`);
+    socket.on("swapResponseUpdate", (data) => {   // listens for event update
+      toast.success(
+        data.message || `Swap ${data?.status?.toLowerCase?.() || "update"}`
+      );
     });
     return () => {
       socket.off("newSwapRequest");
@@ -50,7 +52,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signup = async (name, email, password) => {
-    const res = await axiosClient.post("/auth/signup", { name, email, password });
+    const res = await axiosClient.post("/auth/signup", {
+      name,
+      email,
+      password,
+    });
     setUser(res.data.user);
   };
 

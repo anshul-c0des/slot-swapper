@@ -4,8 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");   // holds user input for email
+  const [password, setPassword] = useState("");   // uer password input
   const { login } = useAuth();
   const navigate = useNavigate();
 

@@ -6,12 +6,12 @@ import SwapRequestModal from "../../components/SwapRequestModal";
 
 export default function Marketplace() {
   const { user } = useAuth();
-  const [slots, setSlots] = useState([]);
-  const [mySwappableSlots, setMySwappableSlots] = useState([]);
-  const [swapModalOpen, setSwapModalOpen] = useState(false);
-  const [selectedTheirSlot, setSelectedTheirSlot] = useState(null);
+  const [slots, setSlots] = useState([]);   // used to store slots
+  const [mySwappableSlots, setMySwappableSlots] = useState([]);   // tracks my slots marked as swappable
+  const [swapModalOpen, setSwapModalOpen] = useState(false);   // modal for requesting swap
+  const [selectedTheirSlot, setSelectedTheirSlot] = useState(null);   // their slot for swap
 
-  const fetchSlots = async () => {
+  const fetchSlots = async () => {   // fetches swappable slots
     try {
       const res = await axiosClient.get("/swappable-slots");
       setSlots(res.data.filter((s) => s.userId !== user._id));
@@ -20,7 +20,7 @@ export default function Marketplace() {
     }
   };
 
-  const fetchMySwappableSlots = async () => {
+  const fetchMySwappableSlots = async () => {   // fetches my slots where status = "SWAPPABLE"
     try {
       const res = await axiosClient.get("/events");
       setMySwappableSlots(res.data.filter((e) => e.status === "SWAPPABLE"));
@@ -29,7 +29,7 @@ export default function Marketplace() {
     }
   };
 
-  useEffect(() => {
+  useEffect(() => {   // initialises socket listeners on mount
     if (!user) return;
 
     fetchSlots();
@@ -59,28 +59,41 @@ export default function Marketplace() {
 
   return (
     <div className="p-6 bg-gray-50/30 h-[calc(100vh-5rem)]">
-      <h2 className="text-2xl font-bold mb-4 text-blue-400">Marketplace - Swappable Slots</h2>
-      {slots.length === 0 && <p className="text-gray-500 mt-2 text-lg">No swappable slots available. Check back later...</p>}
+      <h2 className="text-2xl font-bold mb-4 text-blue-400">
+        Marketplace - Swappable Slots
+      </h2>
+      {slots.length === 0 && (
+        <p className="text-gray-500 mt-2 text-lg">
+          No swappable slots available. Check back later...
+        </p>
+      )}
       <ul>
         {slots.map((slot) => (
-          <li key={slot._id} className="border border-blue-400 hover:bg-blue-50 shadow-xs px-3 py-2 my-1 rounded-xl flex justify-between text-gray-700">
+          <li
+            key={slot._id}
+            className="border border-blue-400 hover:bg-blue-50 shadow-xs px-3 py-2 my-1 rounded-xl flex justify-between text-gray-700"
+          >
             <span>
-              <span className="font-semibold text-gray-800 text-lg">{slot.title}</span> —  
+              <span className="font-semibold text-gray-800 text-lg">
+                {slot.title}
+              </span>{" "}
+              —
               {new Date(slot.startTime).toLocaleString([], {
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-              })} 
-              {" "}to{" "} 
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}{" "}
+              to{" "}
               {new Date(slot.endTime).toLocaleString([], {
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-              })} <span className="text-gray-400">(OwnerId: {slot.userId})</span>
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}{" "}
+              <span className="text-gray-400">(OwnerId: {slot.userId})</span>
             </span>
             <button
               className="bg-blue-100 rounded-full font-semibold border-2 border-transparent text-blue-500 px-2 py-1  hover:bg-blue-500 hover:border-blue-500 hover:text-white cursor-pointer transition"

@@ -12,7 +12,6 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-gray-100/70 backdrop-blur-sm px-4 sm:px-6 md:px-8 py-3 sm:py-4">
       <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4 md:gap-6">
-
         <Link
           to={user ? "/dashboard" : "/"}
           className="flex items-center gap-2 font-bold text-xl sm:text-2xl md:text-3xl text-blue-500"

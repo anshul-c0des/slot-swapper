@@ -5,7 +5,7 @@ import { notifyUser } from "../server.js";
 
 const router = express.Router();
 
-router.get("/", verifyToken, async (req, res, next) => {
+router.get("/", verifyToken, async (req, res, next) => {   // get all events of current user
   try {
     const events = await Event.find({ userId: req.user.id });
     res.json(events);
@@ -14,7 +14,7 @@ router.get("/", verifyToken, async (req, res, next) => {
   }
 });
 
-router.post("/", verifyToken, async (req, res, next) => {
+router.post("/", verifyToken, async (req, res, next) => {   // create a new event
   try {
     const { title, startTime, endTime } = req.body;
     const event = new Event({ title, startTime, endTime, userId: req.user.id });
@@ -25,7 +25,7 @@ router.post("/", verifyToken, async (req, res, next) => {
   }
 });
 
-router.put("/:id", verifyToken, async (req, res, next) => {
+router.put("/:id", verifyToken, async (req, res, next) => {   // update an existing event
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
@@ -48,7 +48,7 @@ router.put("/:id", verifyToken, async (req, res, next) => {
   }
 });
 
-router.delete("/:id", verifyToken, async (req, res, next) => {
+router.delete("/:id", verifyToken, async (req, res, next) => {   // delete an event
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });

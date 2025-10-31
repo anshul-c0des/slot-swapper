@@ -7,17 +7,16 @@ import axiosClient from "../api/axiosClient";
 import socket from "../socket";
 import toast from "react-hot-toast";
 
-const localizer = momentLocalizer(moment);
+const localizer = momentLocalizer(moment);   // date parsing for react-big-calendar
 export default function Calendar() {
-  const [events, setEvents] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [currentView, setCurrentView] = useState("month");
+  const [events, setEvents] = useState([]);   // events to display
+  const [modalOpen, setModalOpen] = useState(false);   // modal toggle
+  const [selectedDate, setSelectedDate] = useState(null);   // current selected date
+  const [selectedEvent, setSelectedEvent] = useState(null);   // current selected event
+  const [currentDate, setCurrentDate] = useState(new Date());   // current date for nav
+  const [currentView, setCurrentView] = useState("month");   // current view for nav
 
-
-  const fetchEvents = async () => {
+  const fetchEvents = async () => {   // fetch all user events
     try {
       const res = await axiosClient.get("/events");
       const formatted = res.data.map((e) => ({
@@ -36,8 +35,8 @@ export default function Calendar() {
   useEffect(() => {
     fetchEvents();
   }, []);
-  
-  useEffect(() => {
+
+  useEffect(() => {   // event update listener
     socket.on("eventUpdated", (updatedEvent) => {
       setEvents((prev) =>
         prev.map((e) =>
@@ -68,20 +67,23 @@ export default function Calendar() {
     };
   }, []);
 
-  const handleSelectSlot = (slotInfo) => {
+  const handleSelectSlot = (slotInfo) => {   // restrict event creation in past
     const now = new Date();
     const clickedDate = slotInfo.start;
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const selectedDay = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), clickedDate.getDate());
+    const selectedDay = new Date(
+      clickedDate.getFullYear(),
+      clickedDate.getMonth(),
+      clickedDate.getDate()
+    );
     if (selectedDay < today) {
       toast.error("Cannot create events in the past");
       return;
     }
-  
+
     setSelectedDate(slotInfo.start);
     setModalOpen(true);
   };
-  
 
   const handleEventAdded = () => {
     fetchEvents();
@@ -91,7 +93,7 @@ export default function Calendar() {
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
     setModalOpen(true);
-  }
+  };
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -107,8 +109,8 @@ export default function Calendar() {
         endAccessor="end"
         style={{ height: 600 }}
         selectable
-        view={currentView}    
-        onView={(view) => setCurrentView(view)} 
+        view={currentView}
+        onView={(view) => setCurrentView(view)}
         onSelectSlot={handleSelectSlot}
         onSelectEvent={handleSelectEvent}
         date={currentDate}

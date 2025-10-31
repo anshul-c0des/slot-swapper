@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 export default function Home() {
   return (
     <div className="relative min-h-screen w-full -mt-17  flex flex-col items-center justify-center overflow-hidden bg-linear-to-br from-blue-300 via-cyan-600 to-blue-600 text-white pt-20">
-
       <div className="absolute inset-0">
         <div className="absolute top-20 left-1/4 w-72 h-72 bg-blue-400/30 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-indigo-500/30 rounded-full blur-3xl animate-pulse" />
@@ -15,7 +14,8 @@ export default function Home() {
         </h1>
 
         <p className="text-lg sm:text-xl text-blue-100 mb-8 leading-relaxed">
-          Effortlessly swap your calendar events with peers in real-time.<br />
+          Effortlessly swap your calendar events with peers in real-time.
+          <br />
           Stay flexible, stay connected.
         </p>
 

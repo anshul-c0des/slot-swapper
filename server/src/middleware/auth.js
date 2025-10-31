@@ -1,10 +1,13 @@
 import jwt from "jsonwebtoken";
 
-export const verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {   // verifies user identity using JWT tokens 
   const bearer = req.headers.authorization;
-  const token = req.cookies?.jwt || (bearer?.startsWith("Bearer ") ? bearer.split(" ")[1] : null);
+  const token =
+    req.cookies?.jwt ||
+    (bearer?.startsWith("Bearer ") ? bearer.split(" ")[1] : null);
 
-  if (!token) return res.status(401).json({ message: "Not authorized, no token" });
+  if (!token)
+    return res.status(401).json({ message: "Not authorized, no token" });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -14,5 +17,3 @@ export const verifyToken = (req, res, next) => {
     return res.status(401).json({ message: "Not authorized, token failed" });
   }
 };
-
-

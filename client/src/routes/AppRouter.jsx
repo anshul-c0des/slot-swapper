@@ -9,34 +9,34 @@ import Requests from "../pages/Requests/Requests";
 
 export default function AppRouter() {
   return (
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/requests"
-          element={
-            <ProtectedRoute>
-              <Requests />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/marketplace"
-          element={
-            <ProtectedRoute>
-              <Marketplace />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route
+        path="/requests"
+        element={
+          <ProtectedRoute>
+            <Requests />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/marketplace"
+        element={
+          <ProtectedRoute>
+            <Marketplace />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }

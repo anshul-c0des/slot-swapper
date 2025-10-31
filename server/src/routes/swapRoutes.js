@@ -6,7 +6,7 @@ import { notifyUser } from "../server.js";
 
 const router = express.Router();
 
-router.get("/swappable-slots", verifyToken, async (req, res, next) => {
+router.get("/swappable-slots", verifyToken, async (req, res, next) => {   // gets all swappable slots except user's own slot
   try {
     const slots = await Event.find({
       status: "SWAPPABLE",
@@ -18,7 +18,7 @@ router.get("/swappable-slots", verifyToken, async (req, res, next) => {
   }
 });
 
-router.post("/swap-request", verifyToken, async (req, res, next) => {
+router.post("/swap-request", verifyToken, async (req, res, next) => {   // sends a request to other user for swap
   try {
     const { mySlotId, theirSlotId } = req.body;
 
@@ -36,7 +36,7 @@ router.post("/swap-request", verifyToken, async (req, res, next) => {
       receiverId: theirSlot.userId,
       mySlotId,
       theirSlotId,
-      status: "PENDING"
+      status: "PENDING",
     });
 
     mySlot.status = "SWAP_PENDING";
