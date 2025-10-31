@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     await axiosClient.post("/auth/logout");
     socket.disconnect();
+    toast.success("Logged out successfully!");
     setUser(null);
   };
 

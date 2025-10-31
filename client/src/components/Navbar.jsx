@@ -5,44 +5,68 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const location = useLocation();
 
+  const isHome = location.pathname === "/";
+  const isLogin = location.pathname === "/login";
+  const isSignup = location.pathname === "/signup";
+
   return (
-    <nav className="bg-gray-800 text-white px-6 py-3 flex justify-between items-center">
-      <div className="flex gap-6 items-center">
-        <Link to={user ? "/dashboard" : "/"} className="font-bold text-lg">SlotSwapper</Link>
-        {user && (
-          <>
-            <Link
-              to="/dashboard"
-              className={`hover:text-gray-300 ${location.pathname === "/dashboard" ? "underline" : ""}`}
+    <nav className="fixed top-0 w-full z-50 bg-gray-100/70 backdrop-blur-sm px-4 sm:px-6 md:px-8 py-3 sm:py-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4 md:gap-6">
+
+        <Link
+          to={user ? "/dashboard" : "/"}
+          className="flex items-center gap-2 font-bold text-xl sm:text-2xl md:text-3xl text-blue-500"
+        >
+          <img src="../../public/logo.png" alt="LOGO" className="w-7 h-7 sm:w-8 sm:h-8" />
+          <span className="truncate max-w-[100px] sm:max-w-[150px]">SlotSwapper</span>
+        </Link>
+
+        <div className="flex flex-wrap justify-center gap-1 sm:gap-2 md:gap-4 text-sm sm:text-base md:text-lg font-semibold">
+          {user && (
+            <>
+              {["dashboard", "marketplace", "requests"].map((path) => (
+                <Link
+                  key={path}
+                  to={`/${path}`}
+                  className={`border-2 border-transparent px-2 sm:px-3 py-1 rounded-full transition text-blue-500 ${
+                    location.pathname === `/${path}`
+                      ? "bg-blue-500 text-white border-blue-500"
+                      : "hover:bg-blue-100/60"
+                  }`}
+                >
+                  {path.charAt(0).toUpperCase() + path.slice(1)}
+                </Link>
+              ))}
+            </>
+          )}
+        </div>
+
+        <div className="flex gap-2 sm:gap-4 items-center">
+          {user ? (
+            <button
+              onClick={logout}
+              className="bg-red-100/60 text-red-500 border-2 border-transparent px-3 sm:px-4 py-1 sm:py-2 text-sm sm:text-base rounded-full font-semibold hover:bg-red-500 hover:text-white hover:border-red-500 transition"
             >
-              Dashboard
-            </Link>
-            <Link
-              to="/marketplace"
-              className={`hover:text-gray-300 ${location.pathname === "/marketplace" ? "underline" : ""}`}
-            >
-              Marketplace
-            </Link>
-            <Link
-              to="/requests"
-              className={`hover:text-gray-300 ${location.pathname === "/requests" ? "underline" : ""}`}
-            >
-              Requests
-            </Link>
-          </>
-        )}
-      </div>
-      <div>
-        {user ? (
-          <button
-            onClick={logout}
-            className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
-          >
-            Logout
-          </button>
-        ) : (
-          <Link to="/login" className="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700">Login</Link>
-        )}
+              Logout
+            </button>
+          ) : !isHome ? (
+            isLogin ? (
+              <Link
+                to="/signup"
+                className="bg-blue-100 text-blue-500 border-2 border-transparent px-3 sm:px-4 py-1 sm:py-2 text-sm sm:text-base rounded-full font-semibold hover:bg-blue-500 hover:text-white hover:border-blue-500 transition"
+              >
+                Sign Up
+              </Link>
+            ) : isSignup ? (
+              <Link
+                to="/login"
+                className="bg-blue-100 text-blue-500 border-2 border-transparent px-3 sm:px-4 py-1 sm:py-2 text-sm sm:text-base rounded-full font-semibold hover:bg-blue-500 hover:text-white hover:border-blue-500 transition"
+              >
+                Login
+              </Link>
+            ) : null
+          ) : null}
+        </div>
       </div>
     </nav>
   );

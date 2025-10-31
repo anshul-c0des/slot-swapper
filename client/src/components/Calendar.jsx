@@ -114,9 +114,9 @@ export default function Calendar() {
         date={currentDate}
         onNavigate={(date) => setCurrentDate(date)}
         eventPropGetter={(event) => {
-          let backgroundColor = "#3174ad"; // default BUSY
-          if (event.status === "SWAPPABLE") backgroundColor = "#44e709"; // orange
-          if (event.status === "SWAP_PENDING") backgroundColor = "#fff308"; // red
+          let backgroundColor = "#2f79ba";
+          if (event.status === "SWAPPABLE") backgroundColor = "#44d80e";
+          if (event.status === "SWAP_PENDING") backgroundColor = "#e3bc10";
           return { style: { backgroundColor, color: "white" } };
         }}
       />

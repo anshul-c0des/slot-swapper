@@ -58,18 +58,32 @@ export default function Marketplace() {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-xl font-semibold mb-4">Marketplace - Swappable Slots</h2>
-      {slots.length === 0 && <p>No swappable slots available.</p>}
+    <div className="p-6 bg-gray-50/30 h-[calc(100vh-5rem)]">
+      <h2 className="text-2xl font-bold mb-4 text-blue-400">Marketplace - Swappable Slots</h2>
+      {slots.length === 0 && <p className="text-gray-500 mt-2 text-lg">No swappable slots available. Check back later...</p>}
       <ul>
         {slots.map((slot) => (
-          <li key={slot._id} className="border p-2 my-1 rounded flex justify-between">
+          <li key={slot._id} className="border border-blue-400 hover:bg-blue-50 shadow-xs px-3 py-2 my-1 rounded-xl flex justify-between text-gray-700">
             <span>
-              {slot.title} — {new Date(slot.startTime).toLocaleString()} to{" "}
-              {new Date(slot.endTime).toLocaleString()} (Owner: {slot.userId})
+              <span className="font-semibold text-gray-800 text-lg">{slot.title}</span> —  
+              {new Date(slot.startTime).toLocaleString([], {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })} 
+              {" "}to{" "} 
+              {new Date(slot.endTime).toLocaleString([], {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })} <span className="text-gray-400">(OwnerId: {slot.userId})</span>
             </span>
             <button
-              className="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700"
+              className="bg-blue-100 rounded-full font-semibold border-2 border-transparent text-blue-500 px-2 py-1  hover:bg-blue-500 hover:border-blue-500 hover:text-white cursor-pointer transition"
               onClick={() => handleRequestSwapClick(slot)}
             >
               Request Swap

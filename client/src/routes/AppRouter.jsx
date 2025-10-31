@@ -11,7 +11,14 @@ export default function AppRouter() {
   return (
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/requests" element={<Requests />} />
+        <Route
+          path="/requests"
+          element={
+            <ProtectedRoute>
+              <Requests />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
