@@ -65,6 +65,13 @@ Default URLs:
 - Server: `http://localhost:5000`
 - Client: `http://localhost:5173`
 
+## Tech Stack
+- Frontend: React (with Vite), Tailwind CSS
+- Backend/API: Node.js, Express.js, Mongoose
+- Database: MongoDB
+- Auth: JWT, Bcrypt
+- Websockets: Socket.io
+- Other Tools: Axios, Dotenv, CORS
 
 ## API Reference
 
@@ -127,7 +134,7 @@ Bonus features
 
 
 ## Challenge
-- **Real-time UI**: Implementing real-time notifications and slot swapping without refreshing the UI using `socket.io`. Ensuring that event updates and swap responses instantly reflect on all connected users’ calendars. Managing socket connections and state updates in React to keep the UI consistent.
+- **Real-time UI**: Implementing real-time notifications and slot swapping without refreshing the UI using `socket.io`, ensuring that event updates and swap responses instantly reflect on all connected users’ calendars. Managing socket connections and state updates in React to keep the UI consistent.
 
 
 
