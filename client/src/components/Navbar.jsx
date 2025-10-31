@@ -17,8 +17,8 @@ export default function Navbar() {
           to={user ? "/dashboard" : "/"}
           className="flex items-center gap-2 font-bold text-xl sm:text-2xl md:text-3xl text-blue-500"
         >
-          <img src="../../public/logo.png" alt="LOGO" className="w-7 h-7 sm:w-8 sm:h-8" />
-          <span className="truncate max-w-[100px] sm:max-w-[150px]">SlotSwapper</span>
+          <img src="/logo.png" alt="LOGO" className="w-7 h-7 sm:w-8 sm:h-8" />
+          <span className="max-w-[100px] sm:max-w-[150px]">SlotSwapper</span>
         </Link>
 
         <div className="flex flex-wrap justify-center gap-1 sm:gap-2 md:gap-4 text-sm sm:text-base md:text-lg font-semibold">
