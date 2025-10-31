@@ -5,7 +5,7 @@ A lightweight app to manage your calendar slots and swap them with others in rea
 
 ## Live Demo & Deployment
 
-- Frontend (Vercel): `https://slot-swapper-blue.vercel.app/`
+- **[View Deployed App](https://slot-swapper-blue.vercel.app/)** (Vercel)
 - Backend: deployed on Render (cold starts possible on free tier; first request may be slow).
 
 
