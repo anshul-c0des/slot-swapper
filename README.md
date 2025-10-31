@@ -1,17 +1,17 @@
-## SlotSwapper
+## 📅🔄 SlotSwapper
 
 A lightweight app to manage your calendar slots and swap them with others in real time. Create events, mark them swappable, browse others’ swappable slots, and send/respond to swap requests. Auth uses JWT (httpOnly cookies) and realtime updates are via Socket.IO.
 
 
-## Live Demo & Deployment
+## 🌐 Live Demo & Deployment
 
 - **[View Deployed App](https://slot-swapper-blue.vercel.app/)** (Vercel)
 - Backend: deployed on Render (cold starts possible on free tier; first request may be slow).
 
 
-## Local Setup and Running
+## 🖥️ Local Setup and Running
 
-### Prerequisites
+### 📦 Prerequisites
 - Node.js 18+ and npm
 - MongoDB database (Atlas or local)
 
@@ -65,7 +65,7 @@ Default URLs:
 - Server: `http://localhost:5000`
 - Client: `http://localhost:5173`
 
-## Tech Stack
+## 🚀 Tech Stack
 - Frontend: React (with Vite), Tailwind CSS
 - Backend/API: Node.js, Express.js, Mongoose
 - Database: MongoDB
@@ -73,7 +73,7 @@ Default URLs:
 - Websockets: Socket.io
 - Other Tools: Axios, Dotenv, CORS
 
-## API Reference
+## 📝 API Reference
 
 Base URL (local): `http://localhost:5000/api`
 
@@ -112,17 +112,17 @@ Base URL (local): `http://localhost:5000/api`
 | GET    | `/history`                   | —                       | Accepted/rejected history with `type` |
 
 
-## Realtime (Socket.IO)
+## ⚡ Realtime (Socket.IO)
 - On connect, client emits `register` with the authenticated user id.
 - Server emits: `newSwappableSlot`, `newSwapRequest`, `swapResponseUpdate`.
 - Production: CORS origin must match `CLIENT_URL`. On Render, enable WebSockets. With `NODE_ENV=production`, cookies use `SameSite=None; Secure`.
 
 
-## Frontend Notes
+## 🖥️ Frontend Notes
 - Dev server: `http://localhost:5173`.
 - Axios is configured with `VITE_API_URL` and `withCredentials: true`.
 
-Bonus features
+### ✨ Bonus features
 - Real-time notifications (Socket.IO)
 - Deployed frontend on Vercel; backend on Render (cold starts possible)
 
