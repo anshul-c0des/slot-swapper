@@ -18,7 +18,7 @@ export const io = new Server(server, {
   },
 });
 
-const userSocketMap = new Map();   // map to track users and socket
+export const userSocketMap = new Map();   // map to track users and socket
 
 io.on("connection", (socket) => {
   console.log("🟢 Connected:", socket.id);
@@ -45,5 +45,9 @@ export const notifyUser = (userId, event, data) => {   // function to send real 
   if (socketId) io.to(socketId).emit(event, data);
 };
 
-// Start server
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Only start server if not in test
+if (process.env.NODE_ENV !== "test") {
+  server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+export default server;
